@@ -23,38 +23,12 @@
  *
  * Taken from 
  * - https://wordpress.stackexchange.com/questions/126174/disable-comments-feed-but-not-the-others
+ *
+ * Must use plugins load
+ * WordPress does not automagically looks into folders here
+ * @see https://wordpress.org/support/article/must-use-plugins/
+ * @see https://premium.wpmudev.org/blog/why-you-shouldnt-use-functions-php/
  */
+  require WPMU_PLUGIN_DIR . '/sandbox-disable-comments-feed/sandbox-disable-comments-feed.php';
+?>
 
-
-/**
- * Plugin setup hook
- * 
- * @since 1.0.0
- * @added 2022-12-21 Thomas Fellinger
- */
-add_action('plugins_loaded', 'adv_disable_comments_feed');
-
-function adv_disable_comments_feed(){
-  
-  // Removes Comments Feed pages
-  add_action('do_feed', 'remove_comment_feeds', 9);
-  add_action('do_feed_rdf', 'remove_comment_feeds', 9);
-  add_action('do_feed_rss', 'remove_comment_feeds', 9);
-  add_action('do_feed_rss2', 'remove_comment_feeds', 9);
-  add_action('do_feed_atom', 'remove_comment_feeds', 9);
-
-  // Removes comments feed links from wp head
-  add_filter('feed_links_show_comments_feed', '__return_false'); 
-}
-
-/**
- * Removes Comments Feed pages and redirects to homepage
- * 
- * @since 1.0.0
- * @added 2022-12-21 Thomas Fellinger
- */
-function remove_comment_feeds($for_comments){
-  if ( $for_comments ) {
-    wp_safe_redirect('/');
-  }
-}
