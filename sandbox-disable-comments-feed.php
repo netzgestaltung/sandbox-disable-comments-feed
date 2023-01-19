@@ -54,7 +54,7 @@ function adv_disable_comments_feed(){
  * @added 2022-12-21 Thomas Fellinger
  */
 function remove_comment_feeds($for_comments){
-  if( $for_comments ) {
+  if ( $for_comments ) {
     wp_safe_redirect('/');
   }
 }
